@@ -1,6 +1,8 @@
 import csv
 import sys
+import os
 from time import sleep
+from os.path import join
 from .crawler import crawl
 
 
@@ -48,9 +50,15 @@ sampleRecord = {
 
 def main() -> None:
     """ main function """
+    cwd = os.getcwd()
+    os.makedirs(join(cwd, 'results'), mode=0o755, exist_ok=True)
+
     if len(sys.argv) > 1 and sys.argv[1] is not None:
         fromPage = int(sys.argv[1]) or 1
-        toPage = int(sys.argv[2])
+        toPage = int(sys.argv[2]) or 100
+        fromDate = sys.argv[3] or '2022-01-01'
+        toDate = sys.argv[4] or '2022-12-15'
+        limit = sys.argv[5] or 50
         # insert URL to the queue
         filename = 'smtso-{}-{}.csv'.format(fromPage, toPage)
         full_file_name = './results/' + filename
@@ -64,7 +72,7 @@ def main() -> None:
             p = fromPage
             while p <= toPage:
                 try:
-                    records = crawl(p, 10)
+                    records = crawl(p, limit, fromDate, toDate)
                     # print(records)
                     for r in records:
                         total = total + 1
@@ -76,7 +84,7 @@ def main() -> None:
 
         print('Finished')
         print('Total items: %s' % total)
-        exit()
+        sys.exit()
     else:
         print("Error! Command need a fromPage, eg: python main.py 1 5")
 

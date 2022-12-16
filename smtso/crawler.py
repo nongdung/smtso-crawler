@@ -2,7 +2,7 @@ import requests
 import os
 
 
-def crawl(pageNumber, limit=50):
+def crawl(pageNumber, limit=50, fromDate='2022-01-01', toDate='2022-12-15'):
     URL = 'https://h.smtso.com/crossURL'
     # print("loginName", os.getenv('loginName'))
     # data to be sent to api
@@ -25,8 +25,8 @@ def crawl(pageNumber, limit=50):
             'cgsdz': '',
             'gysdz': '',
             '_firstClick': 1,
-            'StartDate': '2022-01-01',
-            'EndDate': '2022-12-15',
+            'StartDate': fromDate,
+            'EndDate': toDate,
             'Origin_Country': '',
             'Local_Port': '',
             'Transport': '',
