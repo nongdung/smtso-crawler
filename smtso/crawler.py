@@ -9,8 +9,10 @@ def crawl(pageNumber, limit=50, fromDate='2022-01-01', toDate='2022-12-15'):
     ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
     ua += '  (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
 
+    tp = 'BY+SEA|MARITIMA|VESSEL.+CONTAINERIZED.|Marítimo|VESSEL|Marítima|VESSEL,+NON-CONTAINER,+OR+UNABLE+TO+DETERMINE+IF+CONTAINER.|VIA+MARITIMA|Maritime|MARITIMO|MARINE+TRANSPORT'
+    # tp = 'BY+SEA|VESSEL.+CONTAINERIZED.|VESSEL|Marítima|VESSEL,+NON-CONTAINER,+OR+UNABLE+TO+DETERMINE+IF+CONTAINER.|VIA+MARITIMA|Maritime|MARINE+TRANSPORT'
     data = {'page': 1,
-            'limit': 50,
+            'limit': 100,
             'crossmethod': 'queryHuoYun',
             'keyword': '',
             'source': '',
@@ -29,8 +31,10 @@ def crawl(pageNumber, limit=50, fromDate='2022-01-01', toDate='2022-12-15'):
             'EndDate': toDate,
             'Origin_Country': '',
             'Local_Port': '',
-            'Transport': '',
-            'Foreign_Port': ''
+            'Foreign_Port': '',
+            'weightType': 'desc',
+            'Transport': tp
+            # 'BY+SEA%7CVESSEL.+CONTAINERIZED.%7CVESSEL%7CMar%C3%ADtima%7CVESSEL%2C+NON-CONTAINER%2C+OR+UNABLE+TO+DETERMINE+IF+CONTAINER.%7CVIA+MARITIMA%7CMaritime%7CMARINE+TRANSPORT'
             }
 
     headers = {
@@ -49,7 +53,7 @@ def crawl(pageNumber, limit=50, fromDate='2022-01-01', toDate='2022-12-15'):
     r = requests.post(URL, timeout=30, headers=headers, data=data)
 
     result = r.json()
-
+    # print(result)
     if r.status_code == 200 and result['code'] == 0:
         return result['rows']
     else:
