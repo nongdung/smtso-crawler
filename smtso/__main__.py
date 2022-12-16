@@ -15,7 +15,7 @@ sampleRecord = {
     "Billing_No": "HLCUBU3220900633",
     "Source": "USA 美国",
     "Foreign_Port": "CHARLESTON,SC",
-    "Product_Desc": "SHIPPER STOW LOAD&COUNT 400 PAPER SACKS ON 20 PALLETS WITH BLACK TEA BT2 RAC LOT 629(SHIPPING MARK 4963) SVRNA001391 9 TOTAL NET WEIGHT 20000 KGS H T S 0902 40 00 XCONSOLIDATED CARGOX SHIP [MORE]",
+    "Product_Desc": "ITH BL40 00 XCONSOLIDAT",
     "Country_of_Importers": "",
     "Weight_Unit": "K",
     "RecordType": "Import",
@@ -36,7 +36,7 @@ sampleRecord = {
     "Date": "2022-10-31 00:00:00",
     "Weight": 41200,
     "Measurement_Unit": "",
-    "HS_Product": "090240 BLACK TEA(FERMENTED) AND OTHER PARTLY FERMENTED TEA NESOI",
+    "HS_Product": "090240 BLACK TLY FERMENTED TEA NESOI",
     "Id": "543CAB45-F674-49C3-A6C0-1619CD512100",
     "Transport": "VESSEL. CONTAINERIZED.",
     "HS_Code": "090240",
@@ -65,7 +65,7 @@ def main() -> None:
             while p <= toPage:
                 try:
                     records = crawl(p, 10)
-                    print(records[0])
+                    # print(records)
                     for r in records:
                         total = total + 1
                         writer.writerow(r['_source'])

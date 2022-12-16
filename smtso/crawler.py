@@ -1,10 +1,14 @@
 import requests
+import os
 
 
 def crawl(pageNumber, limit=50):
     URL = 'https://h.smtso.com/crossURL'
-
+    # print("loginName", os.getenv('loginName'))
     # data to be sent to api
+    ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+    ua += '  (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
+
     data = {'page': 1,
             'limit': 50,
             'crossmethod': 'queryHuoYun',
@@ -12,8 +16,8 @@ def crawl(pageNumber, limit=50):
             'source': '',
             'ttt': 'b',
             '_SeeSearchCustomsData': False,
-            'loginName': '55BEE3DA07BF346A55AED1DA04913865',
-            'loginPassword': '55BEFFD80791346A5690D19F',
+            'loginName': os.getenv('loginName'),
+            'loginPassword': os.getenv('loginPassword'),
             'cpms': '',
             'hgbm': '',
             'cgs': '',
@@ -35,26 +39,21 @@ def crawl(pageNumber, limit=50):
             'Cache-Control': 'no-cache',
             'Connection': 'keep-alive',
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Cookie': 'JSESSIONID=94DD2DED079D0C98F908718D8ACF57A3; accountCode=57ADFFDA13822F3442BED1D60491282F41B9869210E7373554BED1D807B8282C4287E39710B8382157BEEF9110B82468; loginName=55BEE3DA07BF346A55AED1DA04913865; loginPassword=55BEFFD80791346A5690D19F',
+            # 'Cookie': 'JSESSIONID=; accountCode=; loginName=;loginPassword=',
             'Origin': 'https://h.smtso.com',
-            'Pragma': 'no-cache',
             'Referer': 'https://h.smtso.com/huoyun',
-            'Sec-Fetch-Dest': 'empty',
-            'Sec-Fetch-Mode': 'cors',
-            'Sec-Fetch-Site': 'same-origin',
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+            'User-Agent': ua,
             'X-Requested-With': 'XMLHttpRequest',
-            'sec-ch-ua': '"Google Chrome";v="107", "Chromium";v="107", "Not=A?Brand";v="24"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': 'macOS'
             }
 
     r = requests.post(URL, timeout=30, headers=headers, data=data)
 
     result = r.json()
-    if r.status_code == 200 and 'rows' in result:
+
+    if r.status_code == 200 and result['code'] == 0:
         return result['rows']
     else:
+        print(result)
         return []
     # print("Status Code", r.status_code)
     # print("JSON Response ", r.json())
