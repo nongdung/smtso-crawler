@@ -79,8 +79,8 @@ def main() -> None:
                         writer.writerow(r['_source'])
                 except Exception as err:
                     print(str(err))
+                print("Page: #{}   Saved records: {}".format(p, total))
                 p = p + 1
-                print(total)
                 sleep(10)
 
         print('Finished')
