@@ -1,5 +1,6 @@
 import requests
 import os
+import sys
 
 
 def crawl(pageNumber, limit=50, fromDate='2022-01-01', toDate='2022-12-15'):
@@ -54,10 +55,10 @@ def crawl(pageNumber, limit=50, fromDate='2022-01-01', toDate='2022-12-15'):
 
     result = r.json()
     # print(result)
-    if r.status_code == 200 and result['code'] == 0:
+    if r.status_code == 200 and 'error' not in result:
         return result['rows']
     else:
         print(result)
-        return []
+        sys.exit()
     # print("Status Code", r.status_code)
     # print("JSON Response ", r.json())

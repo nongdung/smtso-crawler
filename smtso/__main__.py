@@ -80,7 +80,8 @@ def main() -> None:
                 except Exception as err:
                     print(str(err))
                 p = p + 1
-                sleep(15)
+                print(total)
+                sleep(10)
 
         print('Finished')
         print('Total items: %s' % total)
